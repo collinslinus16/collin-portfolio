@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COLLIN — Tech Builder &amp; On-Camera Storyteller | Toronto, Canada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f3ece0;
+      --bg-card: #e7dcc8;
+      --paper: #faf6ee;
+      --ink: #171513;
+      --muted: #5c544b;
+      --rust: #9c3818;
+      --rust-dark: #74240b;
+      --border: #171513;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 90;
+      opacity: 0.03;
+      background-image: radial-gradient(#171513 0.75px, transparent 0.75px);
+      background-size: 6px 6px;
+    }
+
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 0%;
+      background: var(--rust);
+      z-index: 120;
+    }
+
+    /* TOPMOST LIVE ANIMATED TICKER BAR */
+    .top-ticker {
+      background: var(--ink);
+      color: var(--bg);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 9px 0;
+      border-bottom: 1.5px solid var(--border);
+      position: relative;
+      z-index: 60;
+    }
+
+    .top-ticker-track {
+      display: inline-flex;
+      gap: 32px;
+      animation: tickerSlide 24s linear infinite;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .top-ticker:hover .top-ticker-track {
+      animation-play-state: paused;
+    }
+
+    .top-ticker .dot {
+      color: #ff7a4d;
+    }
+
+    @keyframes tickerSlide {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(243, 236, 224, 0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .nav-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-logo {
+      font-family: 'Anton', sans-serif;
+      font-size: 30px;
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+    }
+
+    .brand-logo:hover {
+      transform: rotate(-3deg) scale(1.06);
+      color: var(--rust);
+    }
+
+    .live-badge {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #1f9d55;
+      box-shadow: 0 0 0 0 rgba(31, 157, 85, 0.7);
+      animation: pulseDot 1.8s infinite;
+    }
+
+    @keyframes pulseDot {
+      0% { box-shadow: 0 0 0 0 rgba(31, 157, 85, 0.7); }
+      70% { box-shadow: 0 0 0 9px rgba(31, 157, 85, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(31, 157, 85, 0); }
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      position: relative;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding-bottom: 2px;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--rust);
+      transition: width 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 26px;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      background: var(--rust);
+      color: #fff8f0;
+      font-weight: 800;
+      font-size: 11.5px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--border);
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:hover {
+      background: var(--rust-dark);
+      transform: translate(-3px, -3px) scale(1.03);
+      box-shadow: 7px 7px 0 var(--border);
+    }
+
+    .btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    .btn-light {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .btn-light:hover {
+      background: var(--bg-card);
+      color: var(--ink);
+    }
+
+    .script {
+      font-family: 'Caveat', cursive;
+      color: var(--rust);
+      font-weight: 700;
+    }
+
+    .outline-display {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--ink);
+      letter-spacing: 0.02em;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* SURPRISING LETTER-BY-LETTER HERO ENTRANCE */
+    @keyframes letterPop {
+      0% { opacity: 0; transform: translateY(45px) rotate(8deg) scale(0.7); }
+      70% { opacity: 1; transform: translateY(-6px) rotate(-2deg) scale(1.04); }
+      100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+    }
+
+    @keyframes popUp {
+      0% { opacity: 0; transform: translateY(30px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes floatBob {
+      0%, 100% { transform: rotate(1.5deg) translateY(0px); }
+      50% { transform: rotate(-0.8deg) translateY(-10px); }
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-letter {
+      display: inline-block;
+      animation: letterPop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+    }
+
+    .hero-letter:hover {
+      transform: translateY(-10px) rotate(-6deg) scale(1.08);
+      color: var(--rust);
+    }
+
+    .hero-anim-1 { animation: popUp 0.65s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-anim-3 { animation: popUp 0.65s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-anim-4 { animation: popUp 0.65s 0.48s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+    .hero {
+      padding: 48px 0 46px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      font-family: 'Caveat', cursive;
+      font-size: 32px;
+      color: var(--rust);
+      margin-bottom: 2px;
+    }
+
+    h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(72px, 11vw, 138px);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      cursor: default;
+    }
+
+    .hero-sub {
+      margin-top: 16px;
+      font-size: 18px;
+      max-width: 585px;
+      color: var(--ink);
+    }
+
+    .ledger-box {
+      margin-top: 24px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      box-shadow: 5px 5px 0 var(--border);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ledger-cell {
+      padding: 16px 20px;
+      transition: background 0.2s ease;
+    }
+
+    .ledger-cell:hover {
+      background: var(--paper);
+    }
+
+    .ledger-cell:nth-child(1) {
+      border-right: 1.5px dashed var(--border);
+      border-bottom: 1.5px dashed var(--border);
+    }
+
+    .ledger-cell:nth-child(2) {
+      border-bottom: 1.5px dashed var(--border);
+    }
+
+    .ledger-cell:nth-child(3) {
+      border-right: 1.5px dashed var(--border);
+    }
+
+    .ledger-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 36px;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+
+    .ledger-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .source-note {
+      margin-top: 9px;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* INTERACTIVE SHUFFLING HERO PHOTO STACK */
+    .hero-media {
+      position: relative;
+      max-width: 390px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .stamp-badge {
+      position: absolute;
+      top: -24px;
+      right: -18px;
+      width: 104px;
+      height: 104px;
+      z-index: 10;
+      pointer-events: none;
+      animation: spinSlow 13s linear infinite;
+    }
+
+    .photo-card {
+      background: var(--paper);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 12px 12px 16px;
+      box-shadow: 6px 6px 0 var(--border);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .hero-float {
+      animation: floatBob 4.8s ease-in-out infinite;
+    }
+
+    .photo-card.flipping {
+      transform: rotateY(90deg) scale(0.92) !important;
+    }
+
+    .photo-card:hover {
+      animation-play-state: paused;
+      transform: rotate(0deg) translateY(-6px) scale(1.02) !important;
+      box-shadow: 10px 10px 0 var(--border);
+    }
+
+    .photo-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 22px;
+    }
+
+    .media-card {
+      overflow: hidden;
+      background: var(--paper);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 4px 4px 0 var(--border);
+    }
+
+    .media-visual {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+
+    .media-image-button,
+    .media-video-button {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .media-image-button {
+      display: block;
+      background: transparent;
+    }
+
+    .media-image-button img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .media-image-button:hover img {
+      transform: scale(1.04);
+    }
+
+    .media-video-button,
+    .media-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--bg-card);
+      text-align: center;
+    }
+
+    .media-video-button:hover {
+      background: var(--paper);
+    }
+
+    .media-play-icon {
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      background: var(--bg-card);
+      font-size: 22px;
+    }
+
+    .media-fallback {
+      position: absolute;
+      inset: 0;
+      padding: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .media-fallback[hidden] {
+      display: none;
+    }
+
+    .media-caption {
+      padding: 12px 14px 14px;
+    }
+
+    .media-caption p {
+      overflow-wrap: anywhere;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .media-kind {
+      display: inline-block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .view-pill {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(23, 21, 19, 0.9);
+      color: #fff8f0;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid #fff8f0;
+    }
+
+    .shuffle-chip {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--rust);
+      color: #fff8f0;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      box-shadow: 2px 2px 0 var(--border);
+    }
+
+    .photo-caption {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .marquee-strip {
+      border-top: 1.5px solid var(--border);
+      border-bottom: 1.5px solid var(--border);
+      background: var(--bg-card);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 13px 0;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      gap: 24px;
+      animation: marquee 21s linear infinite;
+      font-family: 'Anton', sans-serif;
+      font-size: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .marquee-reverse .marquee-track {
+      animation-direction: reverse;
+      animation-duration: 25s;
+    }
+
+    .marquee-strip:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .marquee-track span.star {
+      color: var(--rust);
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    section {
+      padding: 76px 0;
+      border-bottom: 1.5px solid rgba(23, 21, 19, 0.16);
+    }
+
+    .sec-tag {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 0.96;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h2 .script {
+      font-size: 1.15em;
+      margin-left: 6px;
+      text-transform: none;
+    }
+
+    .sec-intro {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 34px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 4px 4px 0 var(--border);
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease;
+    }
+
+    .card:hover {
+      transform: translate(-3px, -5px);
+      box-shadow: 8px 8px 0 var(--border);
+    }
+
+    .card h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 25px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 10px 0 6px;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .pull-quote {
+      margin: 22px 0;
+      padding: 18px 22px;
+      border-left: 4px solid var(--rust);
+      background: var(--bg-card);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(24px, 3.5vw, 34px);
+      line-height: 1.12;
+      text-transform: uppercase;
+    }
+
+    .bar-row {
+      margin-bottom: 14px;
+    }
+
+    .bar-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .bar-track {
+      height: 14px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--rust);
+      transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .split-fit {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .fit-row {
+      padding: 18px 0;
+      border-bottom: 1.5px solid var(--border);
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      transition: transform 0.2s ease;
+    }
+
+    .fit-row:hover {
+      transform: translateX(6px);
+    }
+
+    .fit-num {
+      font-family: 'Caveat', cursive;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--rust);
+      line-height: 1;
+      min-width: 34px;
+    }
+
+    .rust-board {
+      background: var(--rust);
+      color: #fff8f0;
+      border: 2px solid var(--border);
+      padding: 32px 28px;
+      box-shadow: 8px 8px 0 var(--border);
+      transform: rotate(1.6deg);
+      transition: transform 0.25s ease;
+    }
+
+    .rust-board:hover {
+      transform: rotate(0deg) translateY(-4px);
+    }
+
+    .rust-board h3 {
+      font-family: 'Caveat', cursive;
+      font-size: 38px;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .chip-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .white-chip {
+      background: var(--paper);
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 2px 2px 0 var(--border);
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .white-chip:hover {
+      transform: translateY(-3px) scale(1.04);
+      background: var(--bg-card);
+    }
+
+    /* INTERACTIVE CAMPAIGN BUILDER BOX */
+    .brief-box {
+      margin-top: 34px;
+      background: var(--paper);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 6px 6px 0 var(--border);
+    }
+
+    .vibe-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0 18px;
+    }
+
+    .vibe-tab {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--bg-card);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .vibe-tab.active, .vibe-tab:hover {
+      background: var(--ink);
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+
+    .final-contact {
+      text-align: center;
+      padding: 84px 0 64px;
+    }
+
+    .giant-stack {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(54px, 10vw, 118px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .email-underline {
+      display: inline-block;
+      margin: 14px 0 28px;
+      font-family: 'Caveat', cursive;
+      font-size: clamp(30px, 5vw, 46px);
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 2.5px solid var(--rust);
+      padding-bottom: 2px;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .email-underline:hover {
+      color: var(--rust);
+      transform: scale(1.03);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Confetti spark particle */
+    .spark {
+      position: fixed;
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 300;
+      animation: sparkFly 0.85s ease-out forwards;
+    }
+
+    @keyframes sparkFly {
+      0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3) rotate(240deg); }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(23, 21, 19, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 200;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--paper);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      max-width: 480px;
+      width: 100%;
+      padding: 22px;
+      box-shadow: 8px 8px 0 var(--border);
+      animation: popUp 0.28s ease both;
+    }
+
+    .modal-card img {
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .modal-card video {
+      display: block;
+      width: 100%;
+      max-height: 70vh;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: #000;
+      margin-bottom: 14px;
+    }
+
+    .modal-card.wide {
+      max-width: 760px;
+    }
+
+    footer {
+      border-top: 1.5px solid var(--border);
+      padding: 26px 20px 44px;
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .footer-inner a {
+      color: var(--ink);
+      margin-left: 18px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .grid-3, .grid-4, .split-fit, .story-grid {
+        grid-template-columns: 1fr;
+      }
+      .rust-board {
+        transform: rotate(0deg);
+      }
+    }
+
+
+    /* PHOTO STORY: scattered sticky notes + rolling photo-orbs */
+    .photo-story {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(24px, 5vw, 58px);
+      margin: 42px auto 12px;
+      padding: 24px 8px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .photo-story::before {
+      content: "✳  FRAME BY FRAME  ✳";
+      position: absolute;
+      z-index: -1;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-7deg);
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(34px, 8vw, 92px);
+      letter-spacing: .08em;
+      white-space: nowrap;
+      color: rgba(156, 56, 24, .075);
+      pointer-events: none;
+    }
+
+    .photo-note {
+      --note-color: #ffe28a;
+      --note-tilt: -4deg;
+      width: min(260px, 78vw);
+      position: relative;
+      padding: 15px 15px 18px;
+      background: var(--note-color);
+      border: 1.5px solid var(--border);
+      box-shadow: 7px 8px 0 rgba(23, 21, 19, .9);
+      transform: rotate(var(--note-tilt));
+      animation: noteDrift 5.8s ease-in-out infinite;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease;
+      z-index: 1;
+    }
+
+    .photo-note:nth-child(2n) { --note-color: #d9e8c8; }
+    .photo-note:nth-child(3n) { --note-color: #f5c9b7; }
+
+    .photo-note::before {
+      content: "";
+      position: absolute;
+      width: 78px;
+      height: 20px;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      background: rgba(255, 248, 224, .78);
+      border: 1px solid rgba(23, 21, 19, .18);
+      box-shadow: 0 2px 4px rgba(23, 21, 19, .08);
+    }
+
+    .photo-note:hover {
+      transform: translateY(-12px) rotate(0deg) scale(1.035);
+      box-shadow: 12px 14px 0 rgba(23, 21, 19, .86);
+      animation-play-state: paused;
+      z-index: 4;
+    }
+
+    .photo-note img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border: 1.5px solid var(--border);
+      background: var(--paper);
+    }
+
+    .photo-note figcaption {
+      padding: 12px 3px 0;
+      color: var(--ink);
+    }
+
+    .photo-note .note-kicker {
+      display: block;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      opacity: .72;
+      margin-bottom: 4px;
+    }
+
+    .photo-note .note-copy {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: 25px;
+      font-weight: 700;
+      line-height: 1.02;
+    }
+
+    .photo-note .note-copy span {
+      display: inline-block;
+      animation: handwrittenWiggle 3.8s ease-in-out infinite;
+    }
+
+    .photo-orb-zone {
+      flex: 1 1 250px;
+      min-width: min(100%, 250px);
+      max-width: 460px;
+      text-align: center;
+    }
+
+    .photo-orb {
+      width: clamp(128px, 21vw, 190px);
+      aspect-ratio: 1;
+      display: block;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 50%;
+      border: 3px solid var(--ink);
+      outline: 7px solid rgba(156, 56, 24, .14);
+      box-shadow: 8px 10px 0 var(--border), inset -12px -14px 25px rgba(23, 21, 19, .2);
+      position: relative;
+      animation: orbRoll 8.5s ease-in-out infinite;
+      transform-origin: center;
+      background: var(--bg-card);
+    }
+
+    .photo-orb:nth-of-type(2) { animation-delay: -2.3s; }
+    .photo-orb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      animation: orbImageSpin 18s linear infinite;
+    }
+
+    .photo-orb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,.35), transparent 38%, rgba(23,21,19,.16));
+      pointer-events: none;
+    }
+
+    .orb-caption {
+      display: inline-block;
+      max-width: 310px;
+      margin: 22px auto 0;
+      padding: 9px 15px;
+      border: 1.5px solid var(--border);
+      background: var(--paper);
+      box-shadow: 3px 3px 0 var(--border);
+      font-family: 'Caveat', cursive;
+      font-size: 25px;
+      font-weight: 700;
+      transform: rotate(1.5deg);
+      animation: captionBounce 4s ease-in-out infinite;
+    }
+
+    .orb-caption small {
+      display: block;
+      margin-top: 4px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .photo-note.wide-note { width: min(235px, 76vw); }
+    .photo-note.wide-note img { aspect-ratio: 5 / 4; }
+    .photo-note.note-small { width: min(215px, 72vw); }
+    .photo-note.note-small img { aspect-ratio: 1 / 1; }
+
+    .photo-story-label {
+      width: 100%;
+      text-align: center;
+      color: var(--rust);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    @keyframes noteDrift {
+      0%, 100% { translate: 0 0; rotate: 0deg; }
+      50% { translate: 0 -11px; rotate: 1.4deg; }
+    }
+
+    @keyframes orbRoll {
+      0%, 100% { transform: translate3d(-12px, 5px, 0) rotate(-22deg); }
+      50% { transform: translate3d(14px, -11px, 0) rotate(178deg); }
+    }
+
+    @keyframes orbImageSpin {
+      from { transform: scale(1.08) rotate(0deg); }
+      to { transform: scale(1.08) rotate(360deg); }
+    }
+
+    @keyframes handwrittenWiggle {
+      0%, 100% { transform: rotate(-1deg) translateY(0); }
+      50% { transform: rotate(1.5deg) translateY(-2px); }
+    }
+
+    @keyframes captionBounce {
+      0%, 100% { transform: rotate(1.5deg) translateY(0); }
+      50% { transform: rotate(-1deg) translateY(-5px); }
+    }
+
+    @media (max-width: 600px) {
+      .photo-story { gap: 30px; margin-top: 26px; }
+      .photo-story::before { font-size: 34px; }
+      .photo-note { width: min(235px, 78vw); }
+      .photo-orb { width: 145px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .photo-note, .photo-orb, .photo-orb img, .orb-caption,
+      .photo-note .note-copy span { animation: none !important; }
+      .photo-note { transform: rotate(var(--note-tilt)); }
+    }
+
+  
+
+    /* DEPTH PASS: subtle 3D surfaces, layered shadows and polished hover states */
+    :root {
+      --depth-shadow: rgba(23, 21, 19, 0.22);
+      --depth-highlight: rgba(255, 255, 255, 0.62);
+    }
+
+    .card,
+    .photo-card,
+    .ledger-box,
+    .rust-board,
+    .photo-note,
+    .stat-card,
+    .metric-card {
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    .card {
+      position: relative;
+      box-shadow:
+        1px 1px 0 var(--border),
+        3px 3px 0 var(--border),
+        6px 7px 0 rgba(23, 21, 19, 0.10),
+        0 16px 28px var(--depth-shadow);
+      transition:
+        transform 280ms cubic-bezier(.2,.8,.2,1),
+        box-shadow 280ms ease,
+        border-color 280ms ease;
+      will-change: transform;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+      box-shadow:
+        1px 1px 0 var(--border),
+        4px 4px 0 var(--border),
+        9px 11px 0 rgba(23, 21, 19, 0.10),
+        0 24px 38px rgba(23, 21, 19, 0.24);
+    }
+
+    .photo-card {
+      box-shadow:
+        2px 2px 0 var(--border),
+        5px 5px 0 var(--border),
+        9px 12px 0 rgba(23, 21, 19, 0.10),
+        0 24px 38px rgba(23, 21, 19, 0.20);
+    }
+
+    .photo-card:hover {
+      transform: perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(-9px) scale(1.025) !important;
+      box-shadow:
+        2px 2px 0 var(--border),
+        6px 6px 0 var(--border),
+        12px 15px 0 rgba(23, 21, 19, 0.12),
+        0 30px 48px rgba(23, 21, 19, 0.25);
+    }
+
+    .ledger-box {
+      box-shadow:
+        2px 2px 0 var(--border),
+        5px 5px 0 var(--border),
+        9px 10px 0 rgba(23, 21, 19, 0.08),
+        0 18px 30px rgba(23, 21, 19, 0.12);
+      transition: transform 260ms ease, box-shadow 260ms ease;
+    }
+
+    .ledger-box:hover {
+      transform: perspective(1000px) rotateX(1deg) translateY(-4px);
+      box-shadow:
+        2px 2px 0 var(--border),
+        6px 6px 0 var(--border),
+        11px 13px 0 rgba(23, 21, 19, 0.09),
+        0 24px 36px rgba(23, 21, 19, 0.17);
+    }
+
+    .btn,
+    .button,
+    .hero-actions a,
+    .nav-wrap a {
+      transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+    }
+
+    .hero-actions a:hover,
+    .btn:hover,
+    .button:hover {
+      transform: translateY(-3px);
+      filter: saturate(1.12);
+    }
+
+    .tilt-card {
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .tilt-card > * {
+      transform: translateZ(10px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .photo-card, .ledger-box, .hero-actions a, .btn, .button {
+        transition: none !important;
+      }
+    }
+
+  
+    /* REFINED 3D FLIP SYSTEM — compact sizing, real perspective and visible depth */
+    .flip-card {
+      perspective: 1800px;
+      perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      position: relative;
+      isolation: isolate;
+      outline-offset: 5px;
+    }
+
+    .flip-inner {
+      display: grid;
+      grid-template: 1fr / 1fr;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 950ms cubic-bezier(.18,.72,.18,1);
+      will-change: transform;
+    }
+
+    .flip-card.is-flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-front,
+    .flip-back {
+      grid-area: 1 / 1;
+      min-width: 0;
+      min-height: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform-style: preserve-3d;
+      border-radius: inherit;
+    }
+
+    .flip-front {
+      position: relative;
+      z-index: 2;
+      transform: rotateY(0deg) translateZ(1px);
+    }
+
+    .flip-back {
+      position: relative;
+      z-index: 1;
+      transform: rotateY(180deg) translateZ(1px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      padding: 18px;
+      color: #faf6ee;
+      background:
+        radial-gradient(ellipse at 18% 12%, rgba(255,255,255,.19), transparent 36%),
+        linear-gradient(145deg, #9c3818 0%, #74240b 48%, #171513 100%);
+      border: 1.5px solid #171513;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.25),
+        inset 0 -10px 24px rgba(0,0,0,.18);
+      overflow: hidden;
+    }
+
+    .flip-back::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(250,246,238,.22);
+      pointer-events: none;
+    }
+
+    .flip-back-kicker {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #f2c27a;
+      transform: translateZ(18px);
+    }
+
+    .flip-back-message {
+      max-width: 28ch;
+      font-size: clamp(13px, 1.4vw, 17px);
+      line-height: 1.5;
+      font-weight: 700;
+      transform: translateZ(26px);
+    }
+
+    .flip-back-hint {
+      font-size: 9px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      opacity: .7;
+      transform: translateZ(12px);
+    }
+
+    .flip-card::after {
+      content: "↻ FLIP";
+      position: absolute;
+      right: 10px;
+      bottom: 9px;
+      z-index: 5;
+      pointer-events: none;
+      padding: 4px 7px;
+      border: 1px solid rgba(23,21,19,.45);
+      border-radius: 2px;
+      background: rgba(250,246,238,.92);
+      color: #171513;
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      opacity: .8;
+      transition: opacity 180ms ease;
+    }
+
+    .flip-card:hover::after { opacity: 1; }
+    .flip-card.is-flipped::after { content: "↻ BACK"; }
+    .flip-card:focus-visible { outline: 3px solid #9c3818; }
+
+    /* Keep the original compact card proportions and internal layouts. */
+    .flip-card.card {
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      transition: transform 260ms ease;
+    }
+    .flip-card.card .flip-front {
+      padding: 22px;
+      background: var(--paper);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 4px 4px 0 var(--border), 0 12px 22px rgba(23,21,19,.12);
+    }
+    .flip-card.card:hover {
+      transform: translateY(-4px);
+    }
+    .flip-card.card:hover .flip-front {
+      box-shadow: 6px 7px 0 var(--border), 0 18px 28px rgba(23,21,19,.18);
+    }
+
+    .flip-card.ledger-box {
+      display: block;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+    .flip-card.ledger-box .flip-front {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      box-shadow: 5px 5px 0 var(--border), 0 12px 22px rgba(23,21,19,.12);
+    }
+    .flip-card.ledger-box .flip-back { min-height: 100%; }
+
+    .flip-card.photo-note {
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+    .flip-card.photo-note .flip-front {
+      padding: 15px 15px 18px;
+      background: var(--note-color, #ffe28a);
+      border: 1.5px solid var(--border);
+      box-shadow: 7px 8px 0 rgba(23,21,19,.9), 0 16px 24px rgba(23,21,19,.14);
+    }
+    .flip-card.photo-note .flip-back {
+      transform: rotateY(180deg) translateZ(1px) rotate(var(--note-tilt, 0deg));
+    }
+
+    .flip-card.photo-orb-zone {
+      display: grid;
+      align-content: start;
+    }
+    .flip-card.photo-orb-zone .flip-front {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .flip-inner { transition: none; }
+    }
+
+    /* Match each reverse face to the exact visual skin of its front face. */
+    .flip-back {
+      color: var(--ink);
+      background: var(--paper);
+      border: 1.5px solid var(--border);
+      border-radius: inherit;
+      box-shadow: 4px 4px 0 var(--border), 0 12px 22px rgba(23,21,19,.12);
+    }
+    .flip-back::before {
+      border-color: rgba(23,21,19,.12);
+    }
+    .flip-back-kicker { color: var(--rust); }
+    .flip-back-message { color: var(--ink); }
+    .flip-back-hint { color: var(--muted); }
+    .flip-back-signature { display: block; margin-top: 12px; font-size: 10px; font-style: italic; letter-spacing: .02em; color: var(--muted); }
+
+    .flip-card.card .flip-back {
+      padding: 22px;
+      background: var(--paper);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 4px 4px 0 var(--border), 0 12px 22px rgba(23,21,19,.12);
+    }
+
+    .flip-card.ledger-box .flip-back {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 0;
+      box-shadow: 5px 5px 0 var(--border), 0 12px 22px rgba(23,21,19,.12);
+    }
+
+    .flip-card.photo-note .flip-back {
+      padding: 15px 15px 18px;
+      background: var(--note-color, #ffe28a);
+      border: 1.5px solid var(--border);
+      border-radius: 0;
+      box-shadow: 7px 8px 0 rgba(23,21,19,.9), 0 16px 24px rgba(23,21,19,.14);
+    }
+    .flip-card.photo-note .flip-back-kicker { color: var(--rust-dark); }
+    .flip-card.photo-note .flip-back-message { color: var(--ink); }
+    .flip-card.photo-note .flip-back-hint { color: var(--muted); }
+
+    .flip-card.photo-orb-zone .flip-back {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 5px 6px 0 var(--border), 0 12px 22px rgba(23,21,19,.12);
+    }
+
+  </style> 
+  <!-- GoatCounter Analytics -->
+<script
+  data-goatcounter="https://collin.goatcounter.com/count"
+  async
+  src="https://gc.zgo.at/count.js">
+</script>
+</head>
+<body>
+  <div id="scroll-progress"></div>
+
+  <!-- TOPMOST LIVE MOVING TICKER -->
+  <div class="top-ticker">
+    <div class="top-ticker-track">
+      <span>NOTICE TO BRANDS: TECH FLUENCY + COMEDIC TIMING IN ONE HUMAN</span><span class="dot">✦</span>
+      <span>TORONTO, CANADA · OPEN FOR CAMPAIGNS</span><span class="dot">✦</span>
+      <span>NO ROBOTIC AD READS — ONLY STORIES PEOPLE FINISH</span><span class="dot">✦</span>
+      <span>COLLINSLINUS16@GMAIL.COM</span><span class="dot">✦</span>
+      <span>NOTICE TO BRANDS: TECH FLUENCY + COMEDIC TIMING IN ONE HUMAN</span><span class="dot">✦</span>
+      <span>TORONTO, CANADA · OPEN FOR CAMPAIGNS</span><span class="dot">✦</span>
+      <span>NO ROBOTIC AD READS — ONLY STORIES PEOPLE FINISH</span><span class="dot">✦</span>
+      <span>COLLINSLINUS16@GMAIL.COM</span><span class="dot">✦</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="nav-wrap">
+      <a class="brand-logo" href="#"><span class="live-badge"></span> COLLIN</a>
+      <nav>
+        <a href="#work">Proof &amp; Clips</a>
+        <a href="#origin">Origin</a>
+        <a href="#tech">T141 Stack</a>
+        <a href="#audience">Dashboard</a>
+        <a href="#brands">Partner Up</a>
+      </nav>
+      <a class="btn burst-btn" href="mailto:collinslinus16@gmail.com?subject=Brand%20Campaign%20Inquiry%20for%20Collin">Book Collin</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- HERO -->
+      <section class="hero">
+        <div>
+          <div class="hero-kicker hero-anim-1">Toronto, Canada · Creator &amp; Tech Builder</div>
+          <h1 aria-label="COLLIN.">
+            <span class="hero-letter" style="animation-delay: 0.06s;">C</span><span class="hero-letter" style="animation-delay: 0.11s;">O</span><span class="hero-letter" style="animation-delay: 0.16s;">L</span><span class="hero-letter" style="animation-delay: 0.21s;">L</span><span class="hero-letter" style="animation-delay: 0.26s;">I</span><span class="hero-letter" style="animation-delay: 0.31s;">N</span><span class="hero-letter" style="animation-delay: 0.36s; color: var(--rust);">.</span>
+          </h1>
+          <p class="hero-sub hero-anim-3">
+            Computer Systems (T141) student, creator of <strong>CALEL AI</strong>, and on-camera storyteller—
+            turning complex tech and big brand briefs into moments people actually watch twice.
+          </p>
+
+          <div class="ledger-box hero-anim-4">
+            <div class="ledger-cell">
+              <div class="ledger-num"><span class="count-up" data-target="16507" data-decimals="0">0</span></div>
+              <div class="ledger-label">IG Dashboard Views · 30 Days</div>
+            </div>
+            <div class="ledger-cell">
+              <div class="ledger-num"><span class="count-up" data-target="85" data-decimals="0">0</span>%</div>
+              <div class="ledger-label">Audience Aged 18–34</div>
+            </div>
+            <div class="ledger-cell">
+              <div class="ledger-num"><span class="count-up" data-target="971" data-decimals="0">0</span>+</div>
+              <div class="ledger-label">Instagram Community (@collin_b17)</div>
+            </div>
+            <div class="ledger-cell">
+              <div class="ledger-num">T141 + AI</div>
+              <div class="ledger-label">Canada · CALEL AI Builder</div>
+            </div>
+          </div>
+          <div class="source-note hero-anim-4">VERIFIED: INSTAGRAM PROFESSIONAL DASHBOARD (@COLLIN_B17) · TORONTO, CANADA.</div>
+
+          <div class="hero-actions hero-anim-4">
+            <a class="btn burst-btn" href="mailto:collinslinus16@gmail.com?subject=Brand%20Collab%20Inquiry%20for%20Collin">Start a Campaign</a>
+            <a class="btn btn-light" href="https://www.instagram.com/collin_b17" target="_blank" rel="noopener">Instagram @collin_b17</a>
+            <a class="btn btn-light" href="https://github.com/collinslinus16" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE SHUFFLE PHOTO CARD -->
+        <div class="hero-media hero-anim-3">
+          <svg class="stamp-badge" viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <path id="circlePath" d="M 60, 60 m -44, 0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0" />
+            </defs>
+            <circle cx="60" cy="60" r="56" fill="#faf6ee" stroke="#171513" stroke-width="2" />
+            <text fill="#9c3818" font-size="10.2" font-weight="800" letter-spacing="2.2">
+              <textPath href="#circlePath">TECH · CAMERA · STORY · CANADA ·</textPath>
+            </text>
+          </svg>
+
+          <figure class="photo-card photo-note hero-float" style="--note-color:#ffe28a; --note-tilt:3deg;">
+            <span class="note-kicker">THE OPENING FRAME · TORONTO</span>
+            <img src="Picsart_26-09-03_20-03-09-849.jpg" alt="Collin — featured portfolio photograph" />
+            <figcaption>
+              <span class="note-kicker">A STORY IN MOTION</span>
+              <span class="note-copy"><span>New frame. Same fearless energy.</span></span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </div>
+
+    <!-- MARQUEE 1 -->
+    <div class="marquee-strip">
+      <div class="marquee-track">
+        <span>16,507 IG VIEWS</span><span class="star">✶</span>
+        <span>COMPUTER SYSTEMS T141</span><span class="star">✶</span>
+        <span>CALEL AI</span><span class="star">✶</span>
+        <span>ON-CAMERA STORYTELLING</span><span class="star">✶</span>
+        <span>BASKETBALL</span><span class="star">✶</span>
+        <span>MOVIES &amp; LIBRARY</span><span class="star">✶</span>
+        <span>TORONTO, CANADA</span><span class="star">✶</span>
+        <span>16,507 IG VIEWS</span><span class="star">✶</span>
+        <span>COMPUTER SYSTEMS T141</span><span class="star">✶</span>
+        <span>CALEL AI</span><span class="star">✶</span>
+        <span>ON-CAMERA STORYTELLING</span><span class="star">✶</span>
+        <span>BASKETBALL</span><span class="star">✶</span>
+        <span>MOVIES &amp; LIBRARY</span><span class="star">✶</span>
+        <span>TORONTO, CANADA</span><span class="star">✶</span>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- 01 PROOF & CLIPS -->
+      <section id="work" class="reveal">
+        <div class="sec-tag">01 · Proof &amp; Clips</div>
+        <h2>THE RECEIPTS <span class="script">on screen &amp; in code</span></h2>
+        <p class="sec-intro">
+          Real dashboard numbers from @collin_b17, my CALEL AI build, and the childhood throwback that proves
+          the comedic expressions were already installed in version 1.0.
+        </p>
+
+        <div class="grid-3">
+          <article class="card tilt-card">
+            <span class="pill">▶ 4,899 Views · IG Post</span>
+            <h3>East Africans Do It Better</h3>
+            <p>
+              4,899 views and counting—relatable cultural storytelling, sharp timing, and comments from people
+              who watched all the way through.
+            </p>
+            <div style="margin-top: 14px;">
+              <a class="btn btn-light" href="https://www.instagram.com/collin_b17" target="_blank" rel="noopener">Watch on IG</a>
+            </div>
+          </article>
+
+          <article class="card tilt-card">
+            <span class="pill">▶ 1,145 Views · IG Reel</span>
+            <h3>POV: Spider-Man Trend</h3>
+            <p>
+              1,145 views—mixing playful physical timing with clean execution so brand integrations never feel
+              like a stiff commercial.
+            </p>
+            <div style="margin-top: 14px;">
+              <a class="btn btn-light" href="https://www.instagram.com/collin_b17" target="_blank" rel="noopener">See Reel</a>
+            </div>
+          </article>
+
+          <article class="card tilt-card">
+            <span class="pill">▶ 440 Views + CALEL AI</span>
+            <h3>Toronto Walks &amp; CALEL AI</h3>
+            <p>
+              Filming Toronto one walk at a time (440+ views) while shipping <strong>CALEL AI</strong>—my custom
+              responsive web assistant on GitHub.
+            </p>
+            <div style="margin-top: 14px;">
+              <a class="btn btn-light" href="https://github.com/collinslinus16" target="_blank" rel="noopener">Inspect GitHub</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="photo-story" aria-label="Two photographs presented as animated rolling photo orbs">
+          <div class="photo-story-label">A couple of frames escaped the camera roll</div>
+          <figure class="photo-orb-zone" data-flip-sw="Furahia safari." data-flip-message="Not every meaningful moment has to be big. Sometimes the smallest experiences become the ones that stay with us.">
+            <div class="photo-orb"><img src="IMG_6882.jpg" alt="Selected portfolio photograph — frame one" loading="lazy" /></div>
+            <figcaption class="orb-caption">A little moment. A whole mood.<small>Frame 02 · The camera roll</small></figcaption>
+          </figure>
+          <figure class="photo-orb-zone" data-flip-sw="Kumbukumbu zina thamani." data-flip-message="A photograph keeps more than an image. It holds a feeling, a place, and a moment worth remembering.">
+            <div class="photo-orb"><img src="Picsart_26-09-02_16-06-04-762.jpg" alt="Selected portfolio photograph — frame two" loading="lazy" /></div>
+            <figcaption class="orb-caption">Every snapshot gets its own spotlight.<small>Frame 03 · The camera roll</small></figcaption>
+          </figure>
+        </div>
+
+        <div class="card" style="margin-top: 26px;">
+          <span class="pill">Beyond The Lens</span>
+          <h3>Basketball, Movies &amp; Library</h3>
+          <p>
+            Favorite sport is <strong>basketball</strong>—fast breaks, court vision, and clutch energy. Off the
+            court, I'm studying great <strong>movies</strong> or locked in at the <strong>library</strong> (yes,
+            I actually go there to build).
+          </p>
+        </div>
+      </section>
+
+      <!-- 02 ORIGIN -->
+      <section id="origin" class="reveal">
+        <div class="sec-tag">02 · The Backstory</div>
+        <h2>HOW THIS HAPPENED <span class="script">(plot twist included)</span></h2>
+        <div class="story-grid">
+          <div>
+            <p style="font-size: 17px; margin-bottom: 14px;">
+              Most tech students hide behind a terminal. Most creators have zero clue how the product they're
+              holding actually works. I accidentally ended up doing both.
+            </p>
+            <div class="pull-quote">
+              TURNS OUT UNDERSTANDING THE CODE AND OWNING THE CAMERA IS A SUPERPOWER.
+            </div>
+            <p style="font-size: 16px; color: var(--muted);">
+              While studying Computer Systems (T141) in Toronto, Canada and building <strong>CALEL AI</strong>, I
+              started filming everyday walks and comedy trends—discovering how to turn technical features and
+              brand messages into stories real humans enjoy watching.
+            </p>
+          </div>
+
+          <div class="card" style="background: var(--bg-card);">
+            <span class="pill">Collin's Field Guide</span>
+            <h3 style="margin-top: 12px;">The Daily Rotation</h3>
+            <p style="margin-bottom: 10px;"><strong>🏀 Court:</strong> Basketball — fast reads, hustle &amp; teamwork.</p>
+            <p style="margin-bottom: 10px;"><strong>🎬 Screen:</strong> Movies — studying pacing, timing &amp; character.</p>
+            <p style="margin-bottom: 10px;"><strong>📚 Desk:</strong> The Library — shipping code &amp; planning shoots.</p>
+            <p><strong>🇨🇦 City:</strong> Toronto, Canada — filming the city one walk at a time.</p>
+          </div>
+        </div>
+        <div class="photo-story" aria-label="Animated sticky-note photograph">
+          <figure class="photo-note note-small" style="--note-color:#d9e8c8; --note-tilt:-5deg;">
+            <span class="note-kicker">CHAPTER 04 · THE NEXT PAGE</span>
+            <img src="20261117_074839.jpg" alt="Collin — selected personal photograph" loading="lazy" />
+            <figcaption>
+              <span class="note-copy"><span>Different chapter. Still becoming.</span></span>
+            </figcaption>
+          </figure>
+          <p class="script" style="font-size:30px; max-width:270px; text-align:center;">The best stories keep unfolding when the frame changes.</p>
+        </div>
+      </section>
+
+      <!-- 03 T141 TECHNICAL STACK -->
+      <section id="tech" class="reveal">
+        <div class="sec-tag">03 · T141 Technical Stack</div>
+        <h2>UNDER THE HOOD <span class="script">yes, I actually build</span></h2>
+        <p class="sec-intro">
+          Computer Systems Technician (T141) training in Toronto, Canada—so when tech, SaaS, or hardware brands
+          partner with me, I speak the language naturally.
+        </p>
+
+        <div class="grid-3">
+          <div class="card tilt-card">
+            <span class="pill">T141 Core</span>
+            <h3>Systems &amp; Troubleshooting</h3>
+            <p>
+              Hands-on hardware/software diagnostics, OS setup, and keeping real machines running cleanly under
+              pressure.
+            </p>
+          </div>
+
+          <div class="card tilt-card">
+            <span class="pill">Web &amp; Python</span>
+            <h3>CALEL AI, HTML &amp; CSS</h3>
+            <p>
+              Engineered <strong>CALEL AI</strong> in VS Code using Python, HTML, and CSS for seamless desktop
+              and mobile use.
+            </p>
+          </div>
+
+          <div class="card tilt-card">
+            <span class="pill">Platforms &amp; Ops</span>
+            <h3>WordPress &amp; Airtable</h3>
+            <p>
+              Working familiarity with WordPress sites, Airtable workflows, structured data entry, and clean
+              documentation.
+            </p>
+          </div>
+        </div>
+        <div class="photo-story" aria-label="Animated rolling photograph beside the technical story">
+          <figure class="photo-orb-zone">
+            <div class="photo-orb"><img src="file_00000000a02482439587a25dc36a86ac.png" alt="Selected portfolio image — creative frame" loading="lazy" /></div>
+            <figcaption class="orb-caption">Curiosity in the frame. Builder energy behind it.<small>Frame 05 · Creative mode</small></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 04 WORKFLOW -->
+      <section id="process" class="reveal">
+        <div class="sec-tag">04 · Collaboration Style</div>
+        <h2>HAND TO HAND, STEP TO STEP <span class="script">zero radio silence</span></h2>
+        <p class="sec-intro">
+          I build with brands hand to hand, step to step—keeping every milestone transparent from the first
+          message to launch day.
+        </p>
+        <div class="grid-4">
+          <div class="card">
+            <span class="pill">01 · Align</span>
+            <h3>Goal &amp; Vibe</h3>
+            <p>We lock in your product angle, target audience, and the exact comedic or story tone.</p>
+          </div>
+          <div class="card">
+            <span class="pill">02 · Script</span>
+            <h3>Hook &amp; Beats</h3>
+            <p>We shape the opening hook and scene beats step by step so nothing feels forced.</p>
+          </div>
+          <div class="card">
+            <span class="pill">03 · Film</span>
+            <h3>Camera &amp; Delivery</h3>
+            <p>I bring sharp on-camera expressions, clean framing, and authentic energy.</p>
+          </div>
+          <div class="card">
+            <span class="pill">04 · Launch</span>
+            <h3>Refine &amp; Ship</h3>
+            <p>We polish every detail together hand to hand until the final cut is ready to go live.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 AUDIENCE & DASHBOARD -->
+      <section id="audience" class="reveal">
+        <div class="sec-tag">05 · Audience &amp; Reach</div>
+        <h2>THE DASHBOARD <span class="script">verified receipts</span></h2>
+        <p class="sec-intro">
+          Straight from my Instagram Professional Dashboard (@collin_b17) in Canada—young, active, and tuned in.
+        </p>
+
+        <div class="grid-3">
+          <div class="card">
+            <span class="pill">Age Breakdown</span>
+            <h3>85% Aged 18–34</h3>
+            <div class="bar-row" style="margin-top: 14px;">
+              <div class="bar-top"><span>18–24</span><span>64.6%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="64.6%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-top"><span>25–34</span><span>20.4%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="20.4%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-top"><span>13–17</span><span>7.1%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="7.1%"></div></div>
+            </div>
+            <div class="bar-row" style="margin-bottom: 0;">
+              <div class="bar-top"><span>35+</span><span>7.9%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="7.9%"></div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <span class="pill">Demographics</span>
+            <h3>Gender &amp; Hub</h3>
+            <div class="bar-row" style="margin-top: 14px;">
+              <div class="bar-top"><span>Men</span><span>73%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="73%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-top"><span>Women</span><span>27%</span></div>
+              <div class="bar-track"><div class="bar-fill" data-width="27%"></div></div>
+            </div>
+            <div style="margin-top: 18px; padding-top: 14px; border-top: 1.5px dashed var(--border);">
+              <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--muted);">Primary Hub</div>
+              <div style="font-family: 'Anton', sans-serif; font-size: 24px; margin-top: 2px;">🇨🇦 TORONTO, CANADA</div>
+            </div>
+          </div>
+
+          <div class="card" style="background: var(--bg-card); display: flex; flex-direction: column; justify-content: center;">
+            <span class="pill">Discovery Multiplier</span>
+            <h3 style="font-size: 46px; color: var(--rust);">17.0x</h3>
+            <p style="font-size: 14px; margin-bottom: 12px;">
+              <strong>16,507 views</strong> in 30 days on a <strong>971-follower</strong> account—with top posts
+              reaching <strong>4,899 views</strong>.
+            </p>
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--muted);">
+              Source: IG Professional Dashboard (@collin_b17)
+            </div>
+          </div>
+        </div>
+        <div class="photo-story" aria-label="Animated dashboard-section sticky note">
+          <figure class="photo-note wide-note" style="--note-color:#f5c9b7; --note-tilt:4deg;">
+            <span class="note-kicker">THE STORY DOESN'T PAUSE</span>
+            <img src="20260903_102755.jpg" alt="Collin — selected portfolio photograph" loading="lazy" />
+            <figcaption>
+              <span class="note-copy"><span>One frame today. Another possibility tomorrow.</span></span>
+            </figcaption>
+          </figure>
+          <p class="script" style="font-size:29px; max-width:260px;">A moving story is always bigger than one screenshot.</p>
+        </div>
+      </section>
+
+      <!-- 06 PARTNER UP -->
+      <section id="brands" class="reveal">
+        <div class="split-fit">
+          <div>
+            <div class="sec-tag">06 · Why Partner With Collin</div>
+            <h2>THE UNFAIR ADVANTAGE <span class="script">for your campaign</span></h2>
+
+            <div class="fit-row">
+              <div class="fit-num">01</div>
+              <div>
+                <strong>Real tech fluency + expressive camera presence</strong>
+                <p style="color: var(--muted); font-size: 14px;">Computer Systems (T141) builder who can explain products clearly while keeping viewers entertained.</p>
+              </div>
+            </div>
+
+            <div class="fit-row">
+              <div class="fit-num">02</div>
+              <div>
+                <strong>85% Gen-Z &amp; Millennial audience (18–34)</strong>
+                <p style="color: var(--muted); font-size: 14px;">64.6% aged 18–24 and 20.4% aged 25–34—ideal for tech, campus, gaming, and lifestyle launches.</p>
+              </div>
+            </div>
+
+            <div class="fit-row">
+              <div class="fit-num">03</div>
+              <div>
+                <strong>Hand-to-hand, step-to-step execution</strong>
+                <p style="color: var(--muted); font-size: 14px;">Fast replies, clear checkpoints, and zero stiff robotic reads.</p>
+              </div>
+            </div>
+
+            <div class="fit-row">
+              <div class="fit-num">04</div>
+              <div>
+                <strong>Built for flagship brands &amp; creative campaigns</strong>
+                <p style="color: var(--muted); font-size: 14px;">Based in Toronto, Canada—ready for commercial spots, product demos, and social storytelling.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rust-board">
+            <h3>Categories I'm ready to light up</h3>
+            <p style="font-size: 15px; opacity: 0.95;">
+              Click any category to pre-fill a campaign pitch straight to my inbox:
+            </p>
+            <div class="chip-wrap">
+              <span class="white-chip" onclick="selectVibe('Tech & AI')">Tech &amp; AI</span>
+              <span class="white-chip" onclick="selectVibe('Phones & Laptops')">Phones &amp; Laptops</span>
+              <span class="white-chip" onclick="selectVibe('Big Brand Commercial')">Big Brand Commercial</span>
+              <span class="white-chip" onclick="selectVibe('Basketball & Sportswear')">Basketball &amp; Sportswear</span>
+              <span class="white-chip" onclick="selectVibe('Movies & Streaming')">Movies &amp; Streaming</span>
+              <span class="white-chip" onclick="selectVibe('Student & Campus Culture')">Student &amp; Campus</span>
+            </div>
+            <a class="btn btn-light burst-btn" id="boardCta" href="mailto:collinslinus16@gmail.com?subject=Campaign%20Idea%20for%20Collin">Send Your Brief</a>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE CAMPAIGN VIBE SELECTOR -->
+        <div class="brief-box">
+          <div class="sec-tag">Interactive Brief Builder</div>
+          <h3 style="font-family: 'Anton', sans-serif; font-size: 28px; text-transform: uppercase;">Pick a Campaign Angle &amp; Launch an Email</h3>
+          <div class="vibe-tabs">
+            <button type="button" class="vibe-tab active" onclick="setAngle(this, 'Tech / AI Product Launch', 'Hi Collin, we love your T141 + CALEL AI background and want to team up on a tech product campaign.')">Tech / AI Launch</button>
+            <button type="button" class="vibe-tab" onclick="setAngle(this, 'Funny Brand Sketch / Reel', 'Hi Collin, we love your comedic timing on @collin_b17 and want to create a fun on-camera campaign together.')">Funny Brand Sketch</button>
+            <button type="button" class="vibe-tab" onclick="setAngle(this, 'Campus / Gen-Z Activation', 'Hi Collin, we are looking for an authentic Toronto creator to represent our brand with students.')">Campus / Gen-Z</button>
+            <button type="button" class="vibe-tab" onclick="setAngle(this, 'Commercial / Casting Role', 'Hi Collin, we would love to discuss an upcoming on-camera brand role with you.')">On-Camera Role</button>
+          </div>
+          <p id="anglePreview" style="color: var(--muted); font-size: 14.5px; margin-bottom: 16px; font-style: italic;">
+            "Hi Collin, we love your T141 + CALEL AI background and want to team up on a tech product campaign."
+          </p>
+          <a class="btn burst-btn" id="angleMailBtn" href="mailto:collinslinus16@gmail.com?subject=Tech%20%2F%20AI%20Product%20Launch&body=Hi%20Collin%2C%20we%20love%20your%20T141%20%2B%20CALEL%20AI%20background%20and%20want%20to%20team%20up%20on%20a%20tech%20product%20campaign.">
+            Send This Brief to collinslinus16@gmail.com
+          </a>
+        </div>
+        <div class="photo-story" aria-label="Final animated rolling photo orb">
+          <figure class="photo-orb-zone">
+            <div class="photo-orb"><img src="20260903_102200.jpg" alt="Collin — selected portfolio photograph" loading="lazy" /></div>
+            <figcaption class="orb-caption">The next scene is still unwritten. Let's make it count.<small>Frame 07 · Your move</small></figcaption>
+          </figure>
+        </div>
+      </section>
+    </div>
+
+    <!-- REVERSE MARQUEE -->
+    <div class="marquee-strip marquee-reverse">
+      <div class="marquee-track">
+        <span>TECH &amp; AI</span><span class="star">✶</span>
+        <span>FLAGSHIP BRANDS</span><span class="star">✶</span>
+        <span>BASKETBALL</span><span class="star">✶</span>
+        <span>ON-CAMERA TIMING</span><span class="star">✶</span>
+        <span>CALEL AI</span><span class="star">✶</span>
+        <span>TORONTO, CANADA</span><span class="star">✶</span>
+        <span>TECH &amp; AI</span><span class="star">✶</span>
+        <span>FLAGSHIP BRANDS</span><span class="star">✶</span>
+        <span>BASKETBALL</span><span class="star">✶</span>
+        <span>ON-CAMERA TIMING</span><span class="star">✶</span>
+        <span>CALEL AI</span><span class="star">✶</span>
+        <span>TORONTO, CANADA</span><span class="star">✶</span>
+      </div>
+    </div>
+
+    <!-- 07 ORIGINAL FINALE -->
+    <div class="container">
+      <section id="contact" class="final-contact reveal" style="border-bottom: none;">
+        <div class="sec-tag">07 · Your Move</div>
+        <div class="giant-stack">
+          <div class="outline-display">READY WHEN</div>
+          <div class="outline-display">YOUR BRAND</div>
+          <div>IS .</div>
+        </div>
+        <div class="script" style="font-size: 30px;">drop a line — I reply faster than a cold reboot</div>
+        <div>
+          <a class="email-underline burst-btn" href="mailto:collinslinus16@gmail.com?subject=Brand%20Partnership%20for%20Collin">collinslinus16@gmail.com</a>
+        </div>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <a class="btn burst-btn" href="mailto:collinslinus16@gmail.com?subject=Brand%20Partnership%20for%20Collin">Book Collin</a>
+          <a class="btn btn-light" href="https://www.instagram.com/collin_b17" target="_blank" rel="noopener">Instagram</a>
+          <a class="btn btn-light" href="https://github.com/collinslinus16" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© 2026 COLLIN · TORONTO, CANADA</div>
+      <div>
+        <a href="https://www.instagram.com/collin_b17" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://github.com/collinslinus16" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:collinslinus16@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="previewModal" onclick="closePreview(event)">
+    <div class="modal-card">
+      <img id="modalImg" src="" alt="" hidden />
+      <h3 id="modalTitle" style="font-family: 'Anton', sans-serif; font-size: 28px; text-transform: uppercase;"></h3>
+      <p id="modalDesc" style="color: var(--muted); font-size: 14px; margin: 6px 0 16px;"></p>
+      <button class="btn modal-close" type="button" onclick="closePreview(event)">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Top scroll progress bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('scroll-progress').style.width = pct + '%';
+    });
+
+    // Selected photo set: seven unique user-specified image files only.
+    // The repeated 20261117_074839.jpg entry was intentionally included once.
+    // Tapping a note or rolling orb opens its full-size photograph.
+    document.querySelectorAll('.photo-note img, .photo-orb img').forEach((image) => {
+      image.addEventListener('click', () => openPreview(image.src, 'A frame from Collin’s story', image.alt));
+      image.style.cursor = 'zoom-in';
+    });
+
+    // Live number count-up animation
+    document.querySelectorAll('.count-up').forEach((el) => {
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const duration = 1400;
+      const start = performance.now();
+
+      function tick(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const val = target * eased;
+        el.textContent = decimals > 0 ? val.toFixed(decimals) : Math.round(val).toLocaleString();
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+
+    // Smooth section entrance + animated dashboard bars
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            entry.target.querySelectorAll('.bar-fill').forEach((bar) => {
+              bar.style.width = bar.dataset.width;
+            });
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // Interactive 3D mouse tilt on cards
+    document.querySelectorAll('.tilt-card').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(700px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // Interactive Brief Builder
+    function setAngle(btn, subject, body) {
+      document.querySelectorAll('.vibe-tab').forEach((t) => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('anglePreview').textContent = `"${body}"`;
+      document.getElementById('angleMailBtn').href =
+        `mailto:collinslinus16@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+
+    function selectVibe(category) {
+      const cta = document.getElementById('boardCta');
+      cta.textContent = `Pitch ${category}`;
+      cta.href = `mailto:collinslinus16@gmail.com?subject=${encodeURIComponent(category + ' Campaign with Collin')}`;
+    }
+
+    // Playful spark burst on CTA clicks
+    document.querySelectorAll('.burst-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const colors = ['#9c3818', '#171513', '#d97706', '#e7dcc8'];
+        for (let i = 0; i < 14; i++) {
+          const spark = document.createElement('span');
+          spark.className = 'spark';
+          spark.style.left = e.clientX + 'px';
+          spark.style.top = e.clientY + 'px';
+          spark.style.background = colors[i % colors.length];
+          const angle = (Math.PI * 2 * i) / 14;
+          const dist = 45 + Math.random() * 45;
+          spark.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+          spark.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+          document.body.appendChild(spark);
+          setTimeout(() => spark.remove(), 900);
+        }
+      });
+    });
+
+    // Photo preview modal
+    function openPreview(src, title, desc) {
+      const modal = document.getElementById('previewModal');
+      const image = document.getElementById('modalImg');
+      image.hidden = false;
+      image.src = src;
+      image.alt = desc;
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDesc').textContent = desc;
+      modal.classList.add('open');
+    }
+
+    function closePreview(e) {
+      if (e.target.id !== 'previewModal' && !e.target.closest('.modal-close')) return;
+      const modal = document.getElementById('previewModal');
+      modal.classList.remove('open');
+    }
+  
+    // Accessible 3D flip cards. The original card content and dimensions stay intact.
+    document.addEventListener('DOMContentLoaded', () => {
+      const selectors = ['.card', '.ledger-box', '.photo-note', '.photo-orb-zone'];
+      const targets = document.querySelectorAll(selectors.join(','));
+
+      targets.forEach((card, index) => {
+        if (card.classList.contains('flip-card')) return;
+
+        const inner = document.createElement('div');
+        inner.className = 'flip-inner';
+
+        const front = document.createElement('div');
+        front.className = 'flip-front';
+
+        while (card.firstChild) front.appendChild(card.firstChild);
+
+        const back = document.createElement('div');
+        back.className = 'flip-back';
+
+        // A complete story across all 23 existing flip surfaces.
+        // Each front keeps its original design; only the reverse message changes.
+        // Assign by actual DOM order so every card gets its own message.
+        const notes = [
+          { sw: 'Msingi wa safari.', en: 'I am building my foundation through learning, creating, and exploring new possibilities. George Brown College, Computer Systems Technician, and CALEL are important parts of that journey—not the limits of it.' },
+          { sw: 'Kila mwanzo una hadithi.', en: 'This is one of the opening frames of my story. I am learning to bring together technology, creativity, and the confidence to try something new.' },
+          { sw: 'Mizizi yangu, nguvu yangu.', en: 'My background and experiences are part of what makes my perspective mine. I value where I come from, the people who shape me, and the stories that connect us.' },
+          { sw: 'Ucheshi ni sehemu ya ubunifu.', en: 'I enjoy playful ideas and relatable storytelling. A good moment does not always need a complicated message; sometimes timing, expression, and authenticity are enough.' },
+          { sw: 'Daima najifunza.', en: 'I am studying Computer Systems Technician at George Brown College. For me, education is not only about passing exams—it is about learning to understand problems and solve them thoughtfully.' },
+          { sw: 'Furahia safari.', en: 'Not every meaningful moment needs an explanation. Some memories are worth keeping simply because they happened.' },
+          { sw: 'Kumbukumbu zina thamani.', en: 'A photograph keeps more than an image. It holds a feeling, a place, and a moment worth remembering.' },
+          { sw: 'Wazo linaweza kuwa uhalisia.', en: 'I enjoy taking an idea from imagination and turning it into something people can see, interact with, and use. Building is how I turn curiosity into progress.' },
+          { sw: 'Vitu vidogo vina maana.', en: 'Basketball reminds me about teamwork and quick decisions. Movies teach me about pacing and storytelling, while the library gives me space to focus, learn, and build.' },
+          { sw: 'Katikati ya jana na kesho.', en: 'I am somewhere between who I have been and who I hope to become. I am learning to appreciate the present version of myself while continuing to grow.' },
+          { sw: 'Teknolojia na ubunifu.', en: 'Technology fascinates me because it connects creativity with logic. I want to understand how systems work, how they connect, and how they can make everyday experiences better.' },
+          { sw: 'Jenga kwa nia.', en: 'I like turning ideas into working experiences. CALEL AI and my web projects give me room to experiment, solve problems, and keep improving my technical skills.' },
+          { sw: 'Hatua kwa hatua.', en: 'I am learning how digital platforms and organised workflows support real work. Every tool I explore adds another way to solve a problem and make a process clearer.' },
+          { sw: 'Udadisi hunisukuma mbele.', en: 'Curiosity keeps me exploring. It leads me to try a new tool, start a project, ask another question, or look at an ordinary thing differently.' },
+          { sw: 'Ndoto zinahitaji mpango.', en: 'I believe ambition needs direction. I like understanding the goal, the audience, and the feeling a project should create before deciding how to bring it to life.' },
+          { sw: 'Hadithi hujengwa hatua kwa hatua.', en: 'A strong story starts with a reason to pay attention. I enjoy shaping ideas into clear beats so the message feels natural rather than forced.' },
+          { sw: 'Uhalisia una nguvu.', en: 'I want the work to feel genuine. Thoughtful framing, expressive delivery, and an honest point of view matter more to me than pretending to be someone I am not.' },
+          { sw: 'Boresha, kisha toa.', en: 'The first version is rarely the final version. I value feedback, careful revisions, and the small details that help turn a good idea into finished work.' },
+          { sw: 'Watu ni muhimu.', en: 'Numbers can show reach, but people give that reach meaning. I want to create things that connect with an audience respectfully and give them a reason to engage.' },
+          { sw: 'Kila mtu ana mtazamo wake.', en: 'An audience is made of individuals with different backgrounds and perspectives. Understanding that diversity helps me communicate with care and create more relevant work.' },
+          { sw: 'Fursa huanza na hatua moja.', en: 'Growth is encouraging, but I see it as a starting point rather than a finish line. I want to keep learning what resonates and use that knowledge responsibly.' },
+          { sw: 'Kila siku ni nafasi mpya.', en: 'A single moment never defines the whole journey. There is always another idea to explore, another skill to develop, and another possibility to consider.' },
+          { sw: 'Mbele ni mbele.', en: 'The next chapter is still unwritten. I am open to learning, meaningful collaborations, and opportunities to create something worthwhile. Learn with curiosity. Build with intention. Grow without limits.' }
+        ];
+
+        const selectedNote = {
+          sw: card.dataset.flipSw || (notes[index] && notes[index].sw) || 'Safari bado inaendelea.',
+          en: card.dataset.flipMessage || (notes[index] && notes[index].en) || 'Every experience is part of becoming. I am learning, building, and finding my own direction one step at a time.'
+        };
+        back.innerHTML = `
+          <span class="flip-back-kicker">${selectedNote.sw}</span>
+          <p class="flip-back-message">${selectedNote.en}</p>
+          <span class="flip-back-signature">— A chapter of Collin’s story.</span>
+          <span class="flip-back-hint">Tap or click to turn back</span>
+        `;
+
+        inner.append(front, back);
+        card.appendChild(inner);
+        card.classList.add('flip-card');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-pressed', 'false');
+        card.setAttribute('aria-label', `Flip card ${index + 1} to reveal its message`);
+
+        const toggle = () => {
+          const flipped = card.classList.toggle('is-flipped');
+          card.setAttribute('aria-pressed', String(flipped));
+          card.setAttribute('aria-label', flipped
+            ? `Card ${index + 1} is showing its back. Activate to return`
+            : `Flip card ${index + 1} to reveal its message`);
+        };
+
+        card.addEventListener('click', (event) => {
+          if (event.target.closest('a, button, input, select, textarea, video, audio')) return;
+          toggle();
+        });
+
+        card.addEventListener('keydown', (event) => {
+          if (event.target !== card) return;
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggle();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
